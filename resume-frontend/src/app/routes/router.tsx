@@ -14,7 +14,7 @@ export const router = createBrowserRouter([
           element: <Home />
         },  
             {
-              path: 'contato/trabalhe-conosco',
+              path: 'contato/trabalhe-conosco/:id?',
               element: <TrabalheConosco />
             }     
       ]

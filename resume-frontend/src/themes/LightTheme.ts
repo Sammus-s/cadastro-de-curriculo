@@ -1,6 +1,6 @@
 import { createTheme } from '@mui/material/styles';
 
-const sagLightTheme = createTheme({
+const LightTheme = createTheme({
   cssVariables: true,  
   palette: {
     primary: { //Blue
@@ -43,4 +43,4 @@ const sagLightTheme = createTheme({
   }
 });
 
-export default sagLightTheme;
+export default LightTheme;

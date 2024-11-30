@@ -19,9 +19,9 @@ export class Pessoa {
   @Column({ length: 23, nullable: true })
   telefone: string;
 
-  @OneToMany(() => Formacao, (formacao) => formacao.pessoa, { cascade: true })
+  @OneToMany(() => Formacao, (formacao) => formacao.pessoa, { cascade: true , eager: true})
   formacoes: Formacao[];
 
-  @OneToMany(() => Experiencia, (experiencia) => experiencia.pessoa, { cascade: true })
+  @OneToMany(() => Experiencia, (experiencia) => experiencia.pessoa, { cascade: true , eager: true})
   experiencias: Experiencia[];
 }

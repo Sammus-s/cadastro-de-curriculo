@@ -7,6 +7,7 @@ import {
   HttpException,
   HttpStatus,
   Param,
+  ParseIntPipe,
   ParseUUIDPipe,
   Post,
   Put,
@@ -37,7 +38,7 @@ export class FormacaoController {
   }
 
   @Get(':id')
-  async findById(@Param('id', new ParseUUIDPipe()) id: number): Promise<Formacao> {
+  async findById(@Param('id', new ParseIntPipe()) id: number): Promise<Formacao> {
     const found = await this.service.findById(id);
 
     if (!found) {

@@ -14,7 +14,7 @@ export class ExperienciaController {
   }
 
   @Get(':id')
-  async findById(@Param('id', ParseUUIDPipe) id: number): Promise<Experiencia> {
+  async findById(@Param('id', ParseIntPipe) id: number): Promise<Experiencia> {
     const found = await this.service.findById(id);
 
     if (!found)
@@ -30,7 +30,7 @@ export class ExperienciaController {
 
   @Put(':id')
   async update(
-    @Param('id', ParseUUIDPipe) id: number,
+    @Param('id', ParseIntPipe) id: number,
     @Body() experiencia: Experiencia,
   ): Promise<Experiencia> {
     const found = await this.service.findById(id);

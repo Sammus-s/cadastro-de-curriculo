@@ -1,5 +1,5 @@
 import { Pessoa } from 'src/pessoa/pessoa-entity';
-import { Column, Entity, PrimaryGeneratedColumn, ManyToOne } from 'typeorm';
+import { Column, Entity, PrimaryGeneratedColumn, ManyToOne, JoinColumn } from 'typeorm';
 
 
 @Entity('formacoes')
@@ -20,5 +20,6 @@ export class Formacao {
   dataFinalizacao: Date;
 
   @ManyToOne(() => Pessoa, (pessoa) => pessoa.formacoes, { onDelete: 'CASCADE' })
+  @JoinColumn({ name: 'id_pessoa' })
   pessoa: Pessoa;
 }

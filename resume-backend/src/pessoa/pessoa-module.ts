@@ -1,12 +1,14 @@
 import { Module } from '@nestjs/common';
-import { CategoryService } from './pessoa-service';
-import { CategoryController } from './pessoa-controller';
+import { PessoaService } from './pessoa-service';
+import { PessoaController } from './pessoa-controller';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { Category } from './pessoa-entity';
+import { Pessoa } from './pessoa-entity';
+import { Formacao } from 'src/formacao/formacao-entity';
+import { Experiencia } from 'src/experiencia/experiencia-entity';
 
 @Module({
-  imports: [TypeOrmModule.forFeature([Category])],
-  providers: [CategoryService],
-  controllers: [CategoryController],
+  imports: [TypeOrmModule.forFeature([Pessoa, Formacao, Experiencia])],
+  providers: [PessoaService],
+  controllers: [PessoaController],
 })
-export class CategoryModule {}
+export class PessoaModule {}

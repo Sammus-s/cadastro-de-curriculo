@@ -1,28 +1,28 @@
 import { Repository } from 'typeorm';
-import { Genre } from './experiencia-entity';
+import { Experiencia } from './experiencia-entity';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Injectable } from '@nestjs/common';
 
 @Injectable()
-export class GenreService {
+export class ExperienciaService {
   constructor(
-    @InjectRepository(Genre)
-    private repository: Repository<Genre>,
+    @InjectRepository(Experiencia)
+    private repository: Repository<Experiencia>,
   ) {}
 
-  findAll(): Promise<Genre[]> {
+  findAll(): Promise<Experiencia[]> {
     return this.repository.find();
   }
 
-  findById(id: string): Promise<Genre> {
-    return this.repository.findOneBy({ id: id });
+  findById(id: number): Promise<Experiencia> {
+    return this.repository.findOneBy({ id_experiencia: id });
   }
 
-  save(genre: Genre): Promise<Genre> {
+  save(genre: Experiencia): Promise<Experiencia> {
     return this.repository.save(genre);
   }
 
-  async remove(id: string): Promise<void> {
+  async remove(id: number): Promise<void> {
     await this.repository.delete(id);
   }
 }

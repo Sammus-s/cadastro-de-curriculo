@@ -1,39 +1,39 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Pessoa } from 'src/pessoa/pessoa-entity';
-import { Movie } from 'src/formacao/formacao-entity';
+import { Formacao } from 'src/formacao/formacao-entity';
 import { Repository } from 'typeorm';
 
 @Injectable()
-export class MovieService {
+export class FormacaoService {
   constructor(
-    @InjectRepository(Movie)
-    private repository: Repository<Movie>,
+    @InjectRepository(Formacao)
+    private repository: Repository<Formacao>,
   ) {}
 
-  findAll(): Promise<Movie[]> {
+  findAll(): Promise<Formacao[]> {
     return this.repository.find();
   }
 
-  findById(id: string): Promise<Movie> {
-    return this.repository.findOneBy({ id: id });
+  findById(id: number): Promise<Formacao> {
+    return this.repository.findOneBy({ id_formacao: id });
   }
 
-  findByCategory(category: Category): Promise<Movie[]> {
+  findByPessoa(pessoa: Pessoa): Promise<Formacao[]> {
     return this.repository.find({
       where: {
-        categories: {
-          id: category.id,
+        pessoa: {
+          id_pessoa: pessoa.id_pessoa,
         },
       },
     });
   }
 
-  save(movie: Movie): Promise<Movie> {
+  save(movie: Formacao): Promise<Formacao> {
     return this.repository.save(movie);
   }
 
-  async remove(id: string): Promise<void> {
+  async remove(id: number): Promise<void> {
     await this.repository.delete(id);
   }
 }

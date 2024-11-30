@@ -1,15 +1,14 @@
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { Movie } from './formacao-entity';
-import { MovieService } from './formacao-service';
-import { MovieController } from './formacao-controller';
-import { Category } from 'src/pessoa/pessoa-entity';
-import { Genre } from 'src/experiencia/experiencia-entity';
+import { Formacao } from './formacao-entity';
+import { FormacaoService } from './formacao-service';
+import { FormacaoController } from './formacao-controller';
+import { Pessoa } from 'src/pessoa/pessoa-entity';
 import { SupabaseModule } from 'src/@libs/supabase/supabase.module';
 
 @Module({
-  imports: [TypeOrmModule.forFeature([Category, Genre, Movie]), SupabaseModule],
-  providers: [MovieService],
-  controllers: [MovieController],
+  imports: [TypeOrmModule.forFeature([Formacao,Pessoa]), ],
+  providers: [FormacaoService],
+  controllers: [FormacaoController],
 })
-export class MovieModule {}
+export class FormacaoModule {}

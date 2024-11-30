@@ -1,9 +1,9 @@
 import { Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { CategoryModule } from './pessoa/pessoa-module';
-import { MovieModule } from './formacao/formacao-module';
-import { GenreModule } from './experiencia/experiencia-module';
+import { PessoaModule } from './pessoa/pessoa-module';
+import { FormacaoModule } from './formacao/formacao-module';
+import { ExperienciaModule } from './experiencia/experiencia-module';
 
 @Module({
   imports: [
@@ -20,9 +20,9 @@ import { GenreModule } from './experiencia/experiencia-module';
       synchronize: true,
       autoLoadEntities: true,
     }),
-    CategoryModule,
-    GenreModule,
-    MovieModule,
+    PessoaModule,
+    ExperienciaModule,
+    FormacaoModule,
   ],
 })
 export class AppModule {}

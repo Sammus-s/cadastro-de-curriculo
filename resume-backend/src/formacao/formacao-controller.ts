@@ -15,88 +15,69 @@ import {
   UseInterceptors,
 } from '@nestjs/common';
 import { SupabaseService } from 'src/@libs/supabase/supabase.service';
-import { Category } from 'src/pessoa/pessoa-entity';
-import { Movie } from 'src/formacao/formacao-entity';
-import { MovieService } from 'src/formacao/formacao-service';
+import { Pessoa } from 'src/pessoa/pessoa-entity';
+import { Formacao } from 'src/formacao/formacao-entity';
+import { FormacaoService } from 'src/formacao/formacao-service';
 import { FileInterceptor } from '@nestjs/platform-express';
 
-@Controller('movies')
-export class MovieController {
+@Controller('formacoes')
+export class FormacaoController {
   constructor(
-    private readonly service: MovieService,
-    private readonly supabaseService: SupabaseService,
+    private readonly service: FormacaoService,
   ) {}
 
   @Get()
-  findAll(@Query('categoryId') categoryId?: string): Promise<Movie[]> {
-    if (categoryId) {
-      return this.service.findByCategory({
-        id: Number(categoryId),
-      } as Category);
+  findAll(@Query('formacaoId') formacaoId?: number): Promise<Formacao[]> {
+    if (formacaoId) {
+      return this.service.findByPessoa({
+        id_pessoa: formacaoId,
+      } as Pessoa);
     }
     return this.service.findAll();
   }
 
   @Get(':id')
-  async findById(@Param('id', new ParseUUIDPipe()) id: string): Promise<Movie> {
+  async findById(@Param('id', new ParseUUIDPipe()) id: number): Promise<Formacao> {
     const found = await this.service.findById(id);
 
     if (!found) {
-      throw new HttpException('Movie not found', HttpStatus.NOT_FOUND);
+      throw new HttpException('Formacao not found', HttpStatus.NOT_FOUND);
     }
 
     return found;
   }
 
   @Post()
-  create(@Body() movie: Movie): Promise<Movie> {
-    return this.service.save(movie);
+  create(@Body() formacoe: Formacao): Promise<Formacao> {
+    return this.service.save(formacoe);
   }
 
   @Put(':id')
   async update(
-    @Param('id', ParseUUIDPipe) id: string,
-    @Body() movie: Movie,
-  ): Promise<Movie> {
+    @Param('id', ParseUUIDPipe) id: number,
+    @Body() formacoe: Formacao,
+  ): Promise<Formacao> {
     const found = await this.service.findById(id);
 
     if (!found) {
-      throw new HttpException('Movie not found', HttpStatus.NOT_FOUND);
+      throw new HttpException('Formacao not found', HttpStatus.NOT_FOUND);
     }
 
-    movie.id = found.id;
+    formacoe.id_formacao = found.id_formacao;
 
-    return this.service.save(movie);
+    return this.service.save(formacoe);
   }
 
   @Delete(':id')
   @HttpCode(204)
-  async remove(@Param('id', ParseUUIDPipe) id: string): Promise<void> {
+  async remove(@Param('id', ParseUUIDPipe) id: number): Promise<void> {
     const found = await this.service.findById(id);
 
     if (!found) {
-      throw new HttpException('Movie not found', HttpStatus.NOT_FOUND);
+      throw new HttpException('Formacao not found', HttpStatus.NOT_FOUND);
     }
 
     return this.service.remove(id);
   }
-
-  @Post('upload')
-  @UseInterceptors(FileInterceptor('file'))
-  async uploadFile(@UploadedFile() file: Express.Multer.File) {
-    if (!file) {
-      throw new HttpException('File not found', HttpStatus.BAD_REQUEST);
-    }
-
-    const result = await this.supabaseService.upload(file);
-
-    if (!result) {
-      throw new HttpException(
-        'Unable to upload file',
-        HttpStatus.INTERNAL_SERVER_ERROR,
-      );
-    }
-
-    return result;
-  }
 }
+
